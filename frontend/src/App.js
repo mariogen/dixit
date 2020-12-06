@@ -46,8 +46,6 @@ const POST_CARD = gql`
 `;
 
 const App = () => {
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
-
   const {data} = useSubscription(GET_CARDS)
   if (!data) return null
   if (data.loading) return null
@@ -55,7 +53,6 @@ const App = () => {
   return (
     <Container>
       <Swiper
-        thumbs={{ swiper: thumbsSwiper }}
         effect='coverflow'
         grabCursor={true}
         centeredSlides={true}
@@ -72,22 +69,6 @@ const App = () => {
         {data.cards.map(({image}) =>
           <SwiperSlide key={image}>
             <img src={`${process.env.PUBLIC_URL}/images/cards/${image}`} alt={image} />
-          </SwiperSlide>
-        )}
-      </Swiper>
-      <Swiper
-        onSwiper={setThumbsSwiper}
-        watchSlidesVisibility
-        watchSlidesProgress
-        slidesPerView={5}
-      >
-        {data.cards.map(({image}) =>
-          <SwiperSlide key={image}>
-            <img 
-              src={`${process.env.PUBLIC_URL}/images/cards/${image}`}
-              alt={image}
-              style={{maxHeight: '100px'}}
-            />
           </SwiperSlide>
         )}
       </Swiper>
